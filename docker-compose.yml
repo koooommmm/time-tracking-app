@@ -11,6 +11,11 @@ services:
       MYSQL_PASSWORD: ${USERPASS}
       TZ: 'Asia/Tokyo'
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: mysqladmin ping -h localhost
+      interval: 5s
+      timeout: 5s
+      retries: 5
     volumes:
     - db-store:/var/lib/mysql
     - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
@@ -20,13 +25,14 @@ services:
 
   backend:
     build: ./backend
-    command: python3 manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/code
     ports:
       - 8000:8000
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   frontend:
     build: ./frontend
