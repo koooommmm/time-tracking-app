@@ -5,7 +5,3 @@ interface TrackRecord {
   end_at: Date;
   status: string;
 }
-
-type trackRecordsDataProps = {
-  trackRecordsData: TrackRecord[];
-};

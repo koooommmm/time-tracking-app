@@ -1,4 +1,8 @@
-const TrackRecordList = (props: trackRecordsDataProps) => {
+type Props = {
+  trackRecordsData: TrackRecord[];
+};
+
+const TrackRecordList = (props: Props) => {
   return (
     <table>
       <thead>

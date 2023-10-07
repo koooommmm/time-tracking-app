@@ -1,10 +1,10 @@
 import axios from "axios";
 
-type props = {
+type Props = {
   updateRecords: () => void;
 };
 
-const FormTrackRecord = (props: props) => {
+const FormTrackRecord = (props: Props) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
