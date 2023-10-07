@@ -1,18 +1,21 @@
+import FormTrackRecord from "@/components/formTrackRecord";
 import TrackRecordList from "@/components/trackRecordList";
 import { getTrackRecords } from "@/lib/trackrecords";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 
-export async function getStaticProps() {
-  const trackRecordsData = await getTrackRecords();
+const Home = () => {
+  const [trackRecordsData, setTrackRecordsData] = useState([]);
 
-  return {
-    props: {
-      trackRecordsData,
-    },
+  useEffect(() => {
+    updateRecords();
+  }, []);
+
+  const updateRecords = async () => {
+    const records = await getTrackRecords();
+    setTrackRecordsData(records);
   };
-}
 
-export default function Home(props: trackRecordsDataProps) {
   return (
     <>
       <Head>
@@ -20,9 +23,10 @@ export default function Home(props: trackRecordsDataProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <h1>時間計測</h1>
-      <TrackRecordList
-        trackRecordsData={props.trackRecordsData}
-      ></TrackRecordList>
+      <TrackRecordList trackRecordsData={trackRecordsData}></TrackRecordList>
+      <FormTrackRecord updateRecords={updateRecords}></FormTrackRecord>
     </>
   );
-}
+};
+
+export default Home;

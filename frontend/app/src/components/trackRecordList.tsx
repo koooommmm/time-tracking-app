@@ -1,4 +1,4 @@
-export default function TrackRecordList(props: trackRecordsDataProps) {
+const TrackRecordList = (props: trackRecordsDataProps) => {
   return (
     <table>
       <thead>
@@ -23,4 +23,6 @@ export default function TrackRecordList(props: trackRecordsDataProps) {
       </tbody>
     </table>
   );
-}
+};
+
+export default TrackRecordList;
