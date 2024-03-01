@@ -1,8 +1,6 @@
-import axios from "axios";
+import { AxiosInstance } from "axios";
 
-export const getTrackRecords = async () => {
-  const track_records = await axios.get(
-    process.env.NEXT_PUBLIC_BACKEND_HOST + "/api/trackRecords/"
-  );
+export const getTrackRecords = async (client: AxiosInstance) => {
+  const track_records = await client.get("/api/trackRecords/");
   return track_records.data;
 };

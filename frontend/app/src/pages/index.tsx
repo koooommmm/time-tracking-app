@@ -1,8 +1,16 @@
 import FormTrackRecord from "@/components/formTrackRecord";
 import TrackRecordList from "@/components/trackRecordList";
 import { getTrackRecords } from "@/lib/trackrecords";
+import axios, { AxiosInstance } from "axios";
 import Head from "next/head";
 import { useEffect, useState } from "react";
+
+const client: AxiosInstance = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_BACKEND_HOST,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 const Home = () => {
   const [trackRecordsData, setTrackRecordsData] = useState([]);
@@ -12,7 +20,7 @@ const Home = () => {
   }, []);
 
   const updateRecords = async () => {
-    const records = await getTrackRecords();
+    const records = await getTrackRecords(client);
     setTrackRecordsData(records);
   };
 

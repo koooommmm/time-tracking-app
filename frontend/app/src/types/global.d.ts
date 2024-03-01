@@ -1,7 +1,7 @@
 interface TrackRecord {
   id: number;
   name: string;
-  start_at: Date;
-  end_at: Date;
+  start_at: string;
+  end_at: string;
   status: string;
 }
