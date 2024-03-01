@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type Props = {
   record: TrackRecord;
@@ -26,19 +26,24 @@ const computeDuration = (elapsedTime: number) => {
 };
 
 const CountTimer = (props: Props) => {
-  const [elapsedTime, setElapsedTime] = useState(initElapsedTime(props.record));
+  const [elapsedTime, setElapsedTime] = useState(() => initElapsedTime(props.record));
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (props.record.status === "進行中") {
+        updateElapsedTime();
+      }
+    }, 1000);
+
+    // コンポーネントのアンマウント時やrecordのステータスが変わったときにインターバルをクリア
+    return () => clearInterval(interval);
+  }, [props.record]); // 依存配列にprops.recordを追加
 
   const updateElapsedTime = () => {
-    const start_at = new Date(props.record.start_at);
-    const now = new Date();
-    setElapsedTime((now.getTime() - start_at.getTime()) / 1000);
+    const start_at = new Date(props.record.start_at).getTime();
+    const now = new Date().getTime();
+    setElapsedTime((now - start_at) / 1000);
   };
-
-  window.setInterval(function () {
-    if (props.record.status == "進行中") {
-      updateElapsedTime();
-    }
-  }, 1000);
 
   return <>{computeDuration(elapsedTime)}</>;
 };
