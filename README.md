@@ -17,6 +17,9 @@
 # ビルド
 docker compose build
 
+# 初期構築時はmigrateが必要
+docker compose exec backend python manage.py migrate
+
 # コンテナ起動
 docker compose up
 ```
