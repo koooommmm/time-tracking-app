@@ -5,8 +5,11 @@ type Props = {
 };
 
 const initElapsedTime = (record: TrackRecord) => {
-  
+  if (!record.end_at) return 0;
 
+  const start_at = new Date(record.start_at).getTime();
+  const end_at = new Date(record.end_at).getTime();
+  return (end_at - start_at) / 1000;
 };
 
 const computeDuration = (elapsedTime: number) => {
@@ -23,7 +26,7 @@ const computeDuration = (elapsedTime: number) => {
 };
 
 const CountTimer = (props: Props) => {
-  const [elapsedTime, setElapsedTime] = useState(0);
+  const [elapsedTime, setElapsedTime] = useState(initElapsedTime(props.record));
 
   const updateElapsedTime = () => {
     const start_at = new Date(props.record.start_at);

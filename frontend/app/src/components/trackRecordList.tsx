@@ -1,7 +1,9 @@
 import CountTimer from "@/components/countTimer";
+import axios from "axios";
 
 type Props = {
   trackRecordsData: TrackRecord[];
+  updateRecords: () => void;
 };
 
 const formatDate = (dateString: string) => {
@@ -19,8 +21,17 @@ const formatDate = (dateString: string) => {
     : null;
 };
 
-const handleClick = (id: number) => {
-  return NaN;
+const handleClick = async (props: Props, record: TrackRecord) => {
+  await axios.put(
+    `${process.env.NEXT_PUBLIC_BACKEND_HOST}/api/trackRecords/${record.id}/`,
+    {
+      name: record.name,
+      end_at: new Date(),
+      status: "完了",
+    }
+  );
+
+  props.updateRecords();
 };
 
 const TrackRecordList = (props: Props) => {
@@ -48,8 +59,11 @@ const TrackRecordList = (props: Props) => {
                 <CountTimer record={record}></CountTimer>
               </td>
               <td>
-                <button color="inherit" onClick={handleClick(record.id)}>
-                  ボタン
+                <button
+                  color="inherit"
+                  onClick={() => handleClick(props, record)}
+                >
+                  停止
                 </button>
               </td>
             </tr>

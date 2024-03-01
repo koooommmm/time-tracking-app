@@ -31,7 +31,10 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <h1>時間計測</h1>
-      <TrackRecordList trackRecordsData={trackRecordsData}></TrackRecordList>
+      <TrackRecordList
+        trackRecordsData={trackRecordsData}
+        updateRecords={updateRecords}
+      ></TrackRecordList>
       <FormTrackRecord updateRecords={updateRecords}></FormTrackRecord>
     </>
   );
