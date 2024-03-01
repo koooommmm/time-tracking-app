@@ -36,6 +36,8 @@ services:
 
   frontend:
     build: ./frontend
+    environment:
+      NEXT_PUBLIC_BACKEND_HOST: ${NEXT_PUBLIC_BACKEND_HOST}
     command: npm run dev
     volumes:
       - ./frontend/app:/app
